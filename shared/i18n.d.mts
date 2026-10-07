@@ -1,0 +1,11 @@
+import type english from './en.json';
+export type Language = 'zh-CN' | 'en';
+export type Message = keyof typeof english;
+export type Translator = (message: Message, values?: readonly (string | number | null | undefined)[]) => string;
+export const supportedLanguages: readonly Language[];
+export const defaultLanguage: Language;
+export function isLanguage(value: unknown): value is Language;
+export function createTranslator(language?: Language): Translator;
+export function translateMessage(message: string, language?: Language, depth?: number): string;
+export function formatTime(value: string, language?: Language): string;
+export function formatDate(value: string, language?: Language): string;

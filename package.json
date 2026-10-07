@@ -1,0 +1,104 @@
+{
+  "name": "mypost",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An open-source, local-first API management and debugging tool for Windows and macOS",
+  "homepage": "https://github.com/Wayne-HJ/Mypost#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wayne-HJ/Mypost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wayne-HJ/Mypost/issues"
+  },
+  "keywords": ["api", "http", "rest", "api-client", "api-management", "electron", "desktop"],
+  "author": "Mypost",
+  "license": "MIT",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "start": "electron .",
+    "test": "vitest run && node --test tests/http.test.cjs tests/storage.test.cjs",
+    "test:watch": "vitest",
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:dir": "npm run build && electron-builder --dir",
+    "fixture": "node scripts/fixture.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "electron": "^44.6.0",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.9.0",
+    "vite": "^8.3.3",
+    "vitest": "^5.0.3"
+  },
+  "build": {
+    "appId": "dev.mypost.desktop",
+    "productName": "Mypost",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "shared/**/*",
+      "LICENSE",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "identity": "-",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}"
+  }
+}
